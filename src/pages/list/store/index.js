@@ -13,10 +13,11 @@ function listReducer(state = initialState, action) {
   }
 }
 
-function moneyReducer(state = 0, action) {
+function moneyReducer(state = initialState, action) {
+  console.log('tata', state, action);
   switch (action.type) {
     case 'add_money': {
-      return state + action.payload;
+      return {...state, money: state.money + action.payload};
     }
     default:
       return state;

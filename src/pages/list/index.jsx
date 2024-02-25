@@ -11,7 +11,7 @@ const Money = () => {
 
   return (
     <div className="flex gap-4 items-center justify-center">
-      <p>Money: {money}</p>
+      {/* <p>Money: {money}</p> */}
       <button
         className="bg-slate-100 p-2"
         type="button"
@@ -27,7 +27,7 @@ const Input = () => {
   const [el, setEl] = useState('');
   const list = useSelector((state) => state.list, store);
   const dispatch = useDispatch(store);
-  
+
   const handleAdd = () => {
     dispatch({ type: 'add', payload: el });
   };
@@ -65,7 +65,7 @@ export default function List() {
         <button className="p-2 bg-slate-100 w-full">Go to Increment store</button>
       </Link>
       <Money />
-      <Input />
+      {/* <Input /> */}
     </div>
   );
 }

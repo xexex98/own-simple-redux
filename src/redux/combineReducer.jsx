@@ -1,6 +1,7 @@
 const combineReducers = (reducers) => {
   let nextState = {};
   const reducerKeys = Object.keys(reducers);
+
   return (state = {}, action) => {
     reducerKeys.forEach((reducerKey) => {
       const reducer = reducers[reducerKey];

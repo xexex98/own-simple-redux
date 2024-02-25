@@ -1,19 +1,21 @@
-import React from 'react';
 import { isEqual } from 'lodash';
+import React from 'react';
 
 export default function useSelector(fn, store) {
   const [, rerender] = React.useReducer((x) => x + 1, 0);
-  const render = () => rerender();
 
-  React.useEffect(function () {
-    store.subscribe((prevState, newState) => {
-      console.log('p', prevState, '\nn', newState);
-      // console.log(!isEqual(prevState, newState))
+  React.useEffect(() => {
+    const unsubscribe = store.subscribe((previousState, currentState) => {
+      const prevState = fn(previousState);
+      const newState = fn(currentState);
       const isStateChange = !isEqual(prevState, newState);
-      rerender();
+
+      if (isStateChange) {
+        rerender();
+      }
     });
 
-    // return () => unsubscribe();
+    return () => unsubscribe();
   });
 
   return fn(store.getState());
