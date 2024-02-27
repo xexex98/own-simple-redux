@@ -3,20 +3,35 @@ import useSelector from '../../redux/useSelector';
 import { Link } from 'react-router-dom';
 import store from 'src/pages/counter/store';
 
-export default function Counter() {
-  const value = useSelector((state) => state, store);
+const Count = () => {
+  const value = useSelector((state) => state.value, store);
   const dispatch = useDispatch(store);
-
   return (
-    <div className='list'>
+    <div className='flex items-center justify-center gap-3'>
+      <button
+        className="bg-blue-200 p-2"
+        onClick={() => dispatch({ type: 'increment' })}
+      >
+        Increment
+      </button>
+      <p className='text-lg'>{value}</p>
+      <button
+        className="bg-blue-200 p-2"
+        onClick={() => dispatch({ type: 'decrement' })}
+      >
+        Decrement
+      </button>
+    </div>
+  );
+};
+
+export default function Counter() {
+  return (
+    <div className='flex flex-col gap-4'>
       <Link to={'/list'}>
-        <button>Go to Decrement store</button>
+        <button className="p-2 bg-slate-100 w-full">Go to Decrement store</button>
       </Link>
-      <br />
-      <br />
-      <button onClick={() => dispatch({ type: 'increment' })}>Increment</button>
-      <button onClick={() => dispatch({ type: 'decrement' })}>Decrement</button>
-      <p>{value}</p>
+      <Count />
     </div>
   );
 }

@@ -1,28 +1,20 @@
 export default function createStore(reducer, initialState) {
   let state = initialState ?? {};
-  let listeners = [];
+  let listeners = new Set();
 
   const subscribe = (fn) => {
-    listeners.push(fn);
+    listeners.add(fn);
 
-    return () => {
-      const subscriber = listeners.indexOf(fn);
-
-      if (subscriber !== -1) {
-        listeners.splice(subscriber, 1);
-      }
-    };
+    return () => listeners.delete(fn);
   };
 
   const dispatch = (action) => {
-    const prevState = state;
-    const newState = reducer(state, action);
+    const prevState = structuredClone(state);
+    const nextState = reducer(state, action);
 
-    // console.log('p', prevState, '\nn', newState);
+    state = nextState;
 
-    state = newState;
-
-    listeners.forEach((listener) => listener(prevState, newState));
+    listeners.forEach((listener) => listener(prevState, nextState));
   };
 
   const getState = () => state;

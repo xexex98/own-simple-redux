@@ -1,20 +1,20 @@
 import combineReducers from 'src/redux/combineReducer';
 import createStore from 'src/redux/createStore';
 
-const initialListState = { list: ['socks'] };
-const initialMoneyState = { money: 0, moneyCard: 0 };
+const initialState = { list: { list: ['socks'] }, money: { money: 0, moneyCard: 0 } };
 
-function listReducer(state = initialListState, action) {
+function listReducer(state = initialState, action) {
+
   switch (action.type) {
     case 'add': {
-      return [...state, action.payload];
+      return { ...state, list: [...state.list, action.payload] };
     }
     default:
       return state;
   }
 }
 
-function moneyReducer(state = initialMoneyState, action) {
+function moneyReducer(state = initialState, action) {
   switch (action.type) {
     case 'add_money': {
       return { ...state, money: state.money + action.payload };
@@ -32,6 +32,6 @@ const rootReducer = combineReducers({
   money: moneyReducer,
 });
 
-const store = createStore(rootReducer);
+const store = createStore(rootReducer, initialState);
 
 export default store;

@@ -5,7 +5,7 @@ import useDispatch from 'src/redux/useDispatch';
 import useSelector from 'src/redux/useSelector';
 
 const Money = () => {
-  const money = useSelector((state) => state.money?.money, store);
+  const money = useSelector((state) => state.money.money, store);
   const dispatch = useDispatch(store);
 
   return (
@@ -23,7 +23,7 @@ const Money = () => {
 };
 
 const MoneyCard = () => {
-  const moneyCard = useSelector((state) => state.money?.moneyCard, store);
+  const moneyCard = useSelector((state) => state.money.moneyCard, store);
   const dispatch = useDispatch(store);
 
   return (
@@ -42,10 +42,11 @@ const MoneyCard = () => {
 
 const Input = () => {
   const [el, setEl] = useState('');
-  const list = useSelector((state) => state.list, store);
+  const list = useSelector((state) => state.list.list, store);
   const dispatch = useDispatch(store);
 
   const handleAdd = () => {
+    if (!el) return;
     dispatch({ type: 'add', payload: el });
   };
 
@@ -67,10 +68,11 @@ const Input = () => {
           Add
         </button>
       </div>
-
-      {list?.list.map((item, i) => (
-        <p key={i}>{item}</p>
-      ))}
+      <div className='flex flex-col border w-1/2 items-center'>
+        {list?.map((item, i) => (
+          <p key={i} className='border-b w-full text-center p-2'>{i + 1}. {item}</p>
+        ))}
+      </div>
     </div>
   );
 };
@@ -83,7 +85,7 @@ export default function List() {
       </Link>
       <Money />
       <MoneyCard />
-      {/* <Input /> */}
+      <Input />
     </div>
   );
 }
