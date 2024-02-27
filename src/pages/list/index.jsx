@@ -1,21 +1,38 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import store from 'src/pages/list/store';
-
 import useDispatch from 'src/redux/useDispatch';
 import useSelector from 'src/redux/useSelector';
 
 const Money = () => {
-  const money = useSelector((state) => state.money, store);
+  const money = useSelector((state) => state.money?.money, store);
   const dispatch = useDispatch(store);
 
   return (
     <div className="flex gap-4 items-center justify-center">
-      {/* <p>Money: {money}</p> */}
+      <p>Money: {money}</p>
       <button
         className="bg-slate-100 p-2"
         type="button"
         onClick={() => dispatch({ type: 'add_money', payload: 100 })}
+      >
+        Add
+      </button>
+    </div>
+  );
+};
+
+const MoneyCard = () => {
+  const moneyCard = useSelector((state) => state.money?.moneyCard, store);
+  const dispatch = useDispatch(store);
+
+  return (
+    <div className="flex gap-4 items-center justify-center">
+      <p>Money Card: {moneyCard}</p>
+      <button
+        className="bg-slate-100 p-2"
+        type="button"
+        onClick={() => dispatch({ type: 'add_money_card', payload: 100 })}
       >
         Add
       </button>
@@ -51,7 +68,7 @@ const Input = () => {
         </button>
       </div>
 
-      {list.map((item, i) => (
+      {list?.list.map((item, i) => (
         <p key={i}>{item}</p>
       ))}
     </div>
@@ -65,6 +82,7 @@ export default function List() {
         <button className="p-2 bg-slate-100 w-full">Go to Increment store</button>
       </Link>
       <Money />
+      <MoneyCard />
       {/* <Input /> */}
     </div>
   );

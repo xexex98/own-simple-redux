@@ -10,10 +10,10 @@ export default function useSelector(fn, store) {
       const newState = fn(currentState);
       const isStateChange = !isEqual(prevState, newState);
 
-      if (isStateChange) {
+      // if (isStateChange) {
         rerender();
-      }
-    });
+      // }
+    }, []);
 
     return () => unsubscribe();
   });
